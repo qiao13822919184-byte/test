@@ -1,0 +1,30 @@
+---
+// src/layouts/BaseLayout.astro
+// 1. 把刚才做的乐高积木引进来！
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+// 2. 接收外部传进来的网页标题
+const { title } = Astro.props;
+---
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | 我的独立站</title>
+  </head>
+  <body style="margin: 0; font-family: sans-serif;">
+    
+    <!-- 顶部导航积木 -->
+    <Header />
+
+    <!-- 🌟 核心魔法：这里是“插槽”。其他页面具体的内容会被塞进这里！ -->
+    <main style="max-width: 900px; margin: 20px auto; padding: 0 20px;">
+      <slot />
+    </main>
+
+    <!-- 底部版权积木 -->
+    <Footer />
+
+  </body>
+</html>

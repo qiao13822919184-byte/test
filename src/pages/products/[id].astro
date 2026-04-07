@@ -1,0 +1,45 @@
+---
+// src/pages/products/[id].astro
+import products from '../../data/products.json';
+// 🌟 1. 引入你的通用骨架
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  return products.map((product) => {
+    return {
+      params: { id: product.id },
+      props: { product: product },
+    };
+  });
+}
+
+const { product } = Astro.props;
+---
+
+<!-- 🌟 2. 使用骨架，并把动态产品名作为网页标题传进去！ -->
+<BaseLayout title={product.name}>
+  
+  <a href="/" style="color: #666; text-decoration: none;">⬅ 返回首页</a>
+  
+  <div style="margin-top: 20px; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
+    <h1>{product.name}</h1>
+    <h2 style="color: #e44d26;">售价：${product.price}</h2>
+    <p style="line-height: 1.6; color: #444;">详细描述：{product.desc}</p>
+    
+    <button id="wa-btn" data-name={product.name} style="background: #25D366; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; margin-top: 15px;">
+      在 WhatsApp 上咨询
+    </button>
+  </div>
+
+  <script>
+    const btn = document.getElementById('wa-btn');
+    if(btn) {
+      btn.addEventListener('click', (e) => {
+        const name = e.target.getAttribute('data-name');
+        const text = encodeURIComponent(`Hi, I want to buy ${name}`);
+        window.open(`https://wa.me/123456789?text=${text}`, '_blank');
+      });
+    }
+  </script>
+
+</BaseLayout>
